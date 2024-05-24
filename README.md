@@ -13,60 +13,60 @@ This repository demonstrates a sample microservices architecture with two micros
 
 To clone this repository along with its submodules, use the following command:
 
-\`\`\`sh
+```sh
 git clone --recurse-submodules https://github.com/djiordhan/microservices-sample.git
-\`\`\`
+```
 
 If you have already cloned the repository without the submodules, you can initialize and update them with:
 
-\`\`\`sh
+```sh
 git submodule update --init --recursive
-\`\`\`
+```
 
 ## Running the Applications
 
 ### Spring Boot Application (products)
 
 1. Navigate to the `products` directory:
-    \`\`\`sh
+    ```sh
     cd products
-    \`\`\`
+    ```
 
 2. Run the Spring Boot application:
-    \`\`\`sh
+    ```sh
     ./gradlew bootRun
-    \`\`\`
+    ```
 
 ### Transactions Service (Node.js)
 
 1. Navigate to the `transactions` directory:
-    \`\`\`sh
+    ```sh
     cd transactions
-    \`\`\`
+    ```
 
 2. Install dependencies:
-    \`\`\`sh
+    ```sh
     yarn install
-    \`\`\`
+    ```
 
 3. Run the development server:
-    \`\`\`sh
+    ```sh
     npm run dev
-    \`\`\`
+    ```
 
 ### Front-end Application (React)
 
 1. Navigate to the `front-end` directory:
-    \`\`\`sh
+    ```sh
     cd front-end
-    \`\`\`
+    ```
 
 2. Install dependencies:
-    \`\`\`sh
+    ```sh
     yarn install
-    \`\`\`
+    ```
 
 3. Run the development server:
-    \`\`\`sh
+    ```sh
     npm run dev
-    \`\`\`
+    ```
