@@ -2,3 +2,6 @@
 	path = front-end
 	url = https://github.com/djiordhan/react-tailwind-pos.git
 	branch = spring-boot-backend
+[submodule "transactions"]
+	path = transactions
+	url = https://github.com/djiordhan/node-pos.git
