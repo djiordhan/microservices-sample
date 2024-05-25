@@ -1,14 +1,15 @@
 package com.djiordhan.products.service;
 
-import com.djiordhan.products.model.Product;
-import com.djiordhan.products.repository.ProductRepository;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+import com.djiordhan.products.model.Product;
+import com.djiordhan.products.repository.ProductRepository;
+import com.djiordhan.products.repsonse.ProductResponse;
 
 @Service
 public class ProductService {
@@ -20,8 +21,18 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
+    public Optional<ProductResponse> findById(Long id) {
+        return productRepository.findById(id).map(this::mapToProductResponse);
+    }
+
+    private ProductResponse mapToProductResponse(Product product) {
+        ProductResponse response = new ProductResponse();
+        response.setId(product.getId());
+        response.setName(product.getName());
+        response.setDescription(product.getDescription());
+        response.setPrice(product.getPrice());
+        response.setImagePath(product.getImagePath());
+        return response;
     }
 
     public Product save(Product product) {
