@@ -1,5 +1,5 @@
 # Use the official OpenJDK image as the base image
-FROM openjdk:11-jdk-slim as build
+FROM openjdk:23-jdk-slim AS build
 
 # Set the working directory
 WORKDIR /home/gradle/app
