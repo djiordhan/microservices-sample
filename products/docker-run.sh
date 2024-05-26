@@ -1,4 +1,4 @@
-docker run -e DB_URL=jdbc:postgresql://localhost:5432/pos \
+docker run -e DB_URL=jdbc:postgresql://postgres:5432/pos \
            -e DB_USERNAME=myuser \
            -e DB_PASSWORD=mypassword \
            -e SERVER_PORT=8002 \

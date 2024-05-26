@@ -1,24 +1,5 @@
-# Use the official OpenJDK image as the base image
-FROM openjdk:23-jdk-slim AS build
-
-# Set the working directory
-WORKDIR /home/gradle/app
-
-# Copy the Gradle wrapper and configuration files
-COPY gradlew gradlew
-COPY gradle gradle
-
-# Copy the project files to the container
-COPY . .
-
-# Give execute permission to the Gradle wrapper
-RUN chmod +x gradlew
-
-# Build the application using the Gradle wrapper
-RUN ./gradlew build
-
-# Use the official OpenJDK image to run the app
-FROM openjdk:11-jre-slim
+# Use the official OpenJDK 20 runtime image to run the app
+FROM openjdk:23-jdk-slim
 
 # Set environment variables for configuration
 ENV DB_URL=jdbc:postgresql://localhost:5432/pos \
@@ -30,8 +11,8 @@ ENV DB_URL=jdbc:postgresql://localhost:5432/pos \
 # Create a directory for the app
 RUN mkdir /app
 
-# Copy the built application jar file to the container
-COPY --from=build /home/gradle/app/build/libs/*.jar /app/app.jar
+# Copy the built application jar file from the local machine to the container
+COPY build/libs/*.jar /app/app.jar
 
 # Expose the configurable port
 EXPOSE ${SERVER_PORT}
