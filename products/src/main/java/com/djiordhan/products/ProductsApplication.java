@@ -3,6 +3,8 @@ package com.djiordhan.products;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.djiordhan.products.model.Product;
 import com.djiordhan.products.repository.ProductRepository;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @SpringBootApplication
 public class ProductsApplication {
