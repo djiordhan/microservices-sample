@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.djiordhan.products.repsonse.StockResponse;
 
-@FeignClient("stocks1")
+@FeignClient(name = "stocks", path = "/")
 public interface StocksClient {
 
     @GetMapping("/stocks")
