@@ -3,8 +3,8 @@ import { Eureka } from 'eureka-js-client';
 export const registerWithEureka = (port: number) => {
     const client = new Eureka({
         instance: {
-            app: 'stocks',
-            hostName: '127.0.0.1:localhost:' + port,
+            app: 'stocks1',
+            hostName: 'localhost',
             ipAddr: '127.0.0.1',
             statusPageUrl: `http://localhost:${port}/stocks/1`,
             port: {

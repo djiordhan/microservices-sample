@@ -8,12 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import com.djiordhan.products.model.Product;
 import com.djiordhan.products.repository.ProductRepository;
 
 @SpringBootApplication
+@EnableFeignClients
 public class ProductsApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductsApplication.class);

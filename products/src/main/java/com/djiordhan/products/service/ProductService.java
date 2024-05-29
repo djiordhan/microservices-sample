@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import com.djiordhan.products.clients.StocksClient;
 import com.djiordhan.products.model.Product;
 import com.djiordhan.products.repository.ProductRepository;
 import com.djiordhan.products.repsonse.ProductResponse;
@@ -20,12 +20,15 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    private RestTemplate restTemplate;
+    @Autowired
+    private StocksClient stocksClient;
+
+    // private RestTemplate restTemplate;
 
     public ProductService(
             @Value("${stocks.base.url}") String stocksBaseUrl,
             RestTemplateBuilder builder) {
-        this.restTemplate = builder.rootUri(stocksBaseUrl).build();
+        // this.restTemplate = builder.rootUri(stocksBaseUrl).build();
     }
 
     public List<Product> findAll() {
@@ -34,7 +37,11 @@ public class ProductService {
 
     public ProductResponse findById(Long id) {
         ProductResponse productResponse = productRepository.findById(id).map(this::mapToProductResponse).get();
-        StockResponse stock = this.restTemplate.getForObject("/stocks/{id}", StockResponse.class, id);
+
+        // StockResponse stock = this.restTemplate.getForObject("/stocks/{id}",
+        // StockResponse.class, id);
+        StockResponse stock = stocksClient.getStocksByProductId(id).getBody();
+
         productResponse.setStock(stock);
 
         return productResponse;
