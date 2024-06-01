@@ -1,23 +1,25 @@
-import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import express from "npm:express@4.18.2";
 import { stocks } from "./data/stocks.ts";
 
-const router = new Router();
+const app = express();
+const PORT = 8000;
 
-router.get("/stocks", (context: any) => {
-    context.response.body = stocks;
+// Define the /stocks route
+app.get("/stocks", (req: any, res: any) => {
+    res.json(stocks);
 });
 
-router.get("/stocks/:id", (context: any) => {
-    const id = context.params.id;
-    const stock = stocks.find((stock: any) => stock.id === parseInt(id!));
-    context.response.body = stock;
+// Define the /stocks/:id route
+app.get("/stocks/:id", (req: any, res: any) => {
+    const id = parseInt(req.params.id);
+    const stock = stocks.find((stock: any) => stock.productId === id);
+    if (stock) {
+        res.json(stock);
+    } else {
+        res.status(404).json({ message: "Stock not found" });
+    }
 });
 
-const app = new Application();
-
-app.use(router.routes());
-app.use(router.allowedMethods());
-
-console.log("Server is running on http://localhost:8000");
-
-await app.listen({ port: 8000 });
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
