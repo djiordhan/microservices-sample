@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  discovery-service:
+    image: discovery-service
+    ports:
+      - "8761:8761"
+
+  mongodb:
+    image: mongo:4.2
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: membersdb
+
+  members-service:
+    image: members-service
+    ports:
+      - "8085:8085"
+    environment:
+      - DB_URL=mongodb://mongodb:27017/membersdb
+      - SERVER_PORT=8085
+      - CONTEXT_PATH=/members
+      - EUREKA_SERVER=http://discovery-service:8761/eureka/
+    depends_on:
+      - mongodb
+      - discovery-service
+
+  members-servic-2:
+    image: members-service
+    ports:
+      - "8086:8085"
+    environment:
+      - DB_URL=mongodb://mongodb:27017/membersdb
+      - SERVER_PORT=8085
+      - CONTEXT_PATH=/members
+      - EUREKA_SERVER=http://discovery-service:8761/eureka/
+    depends_on:
+      - mongodb
+      - discovery-service
