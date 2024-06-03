@@ -1,1 +1,2 @@
-docker build --progress=plain -t product-service .
+./gradlew build
+docker build -t product-service .
