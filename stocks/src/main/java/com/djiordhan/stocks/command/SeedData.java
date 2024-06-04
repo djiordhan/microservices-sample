@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import main.java.com.djiordhan.stocks.model.Stock;
-import main.java.com.djiordhan.stocks.repository.StockRepository;
+import com.djiordhan.stocks.model.Stock;
+import com.djiordhan.stocks.repository.StockRepository;
 
 @Component
 public class SeedData implements CommandLineRunner {

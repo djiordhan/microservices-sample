@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import main.java.com.djiordhan.stocks.model.Stock;
-import main.java.com.djiordhan.stocks.service.StockService;
+import com.djiordhan.stocks.model.Stock;
+import com.djiordhan.stocks.service.StockService;
 
 @RestController
 @RequestMapping("/api/stocks")

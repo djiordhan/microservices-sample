@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import main.java.com.djiordhan.stocks.model.Stock;
-import main.java.com.djiordhan.stocks.repository.StockRepository;
+import com.djiordhan.stocks.model.Stock;
+import com.djiordhan.stocks.repository.StockRepository;
 
 @Service
 public class StockService {
