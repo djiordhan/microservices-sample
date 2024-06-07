@@ -66,7 +66,7 @@ services:
       - postgresspringboot
       - discovery-service
 
-  mysql-db:
+  mysqldb:
     image: mysql:latest
     ports:
       - "3307:3306"
@@ -74,19 +74,49 @@ services:
       - MYSQL_DATABASE=stocks
       - MYSQL_ROOT_PASSWORD=root
 
-  stocks-service:
+  stocks-service-1:
     image: stocks-service:latest
     environment:
-      - DB_URL=jdbc:mysql://mysql-db:3307/stocks
+      - DB_URL=jdbc:mysql://mysqldb:3306/stocks
       - DB_USER=root
       - DB_PASSWORD=root
       - SERVER_PORT=8012
-      - CONTEXT_PATH=/products-app/api
+      - CONTEXT_PATH=/
       - EUREKA_SERVER=http://discovery-service:8761/eureka/
     ports:
       - "8012:8012"
     depends_on:
-      - mysql-db
+      - mysqldb
+      - discovery-service
+
+  stocks-service-2:
+    image: stocks-service:latest
+    environment:
+      - DB_URL=jdbc:mysql://mysqldb:3306/stocks
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - SERVER_PORT=8012
+      - CONTEXT_PATH=/
+      - EUREKA_SERVER=http://discovery-service:8761/eureka/
+    ports:
+      - "8013:8012"
+    depends_on:
+      - mysqldb
+      - discovery-service
+
+  stocks-service-3:
+    image: stocks-service:latest
+    environment:
+      - DB_URL=jdbc:mysql://mysqldb:3306/stocks
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - SERVER_PORT=8012
+      - CONTEXT_PATH=/
+      - EUREKA_SERVER=http://discovery-service:8761/eureka/
+    ports:
+      - "8014:8012"
+    depends_on:
+      - mysqldb
       - discovery-service
 
 volumes:
