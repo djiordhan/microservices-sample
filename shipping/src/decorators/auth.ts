@@ -6,6 +6,7 @@ export const Secured = () => {
         const originalMethod = descriptor.value;
 
         descriptor.value = function (req: any, res: Response, next: NextFunction) {
+            console.log("Secured user", req.user);
             if (!req.user) {
                 throw new ForbiddenError('User is not authenticated');
             }
