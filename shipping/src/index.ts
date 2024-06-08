@@ -3,6 +3,7 @@ import express, { Application } from 'express';
 import { OrdersController } from './controllers/orders.controller';
 import { QuotesController } from './controllers/quotes.controller';
 import { applyRoutes } from './decorators/route';
+import { errorHandler } from './errors/errorHandler';
 
 const app: Application = express();
 app.use(bodyParser.json());
@@ -14,7 +15,7 @@ applyRoutes(router, OrdersController);
 applyRoutes(router, QuotesController);
 
 app.use('/', router);
-
+app.use(errorHandler);
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });

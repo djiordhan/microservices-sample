@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { BadRequestError, ForbiddenError, InternalServerError } from './errors/http.errors';
+import { BadRequestError, ForbiddenError, InternalServerError } from '../errors/http.errors';
 
 export abstract class BaseController {
     protected sendError(res: Response, error: Error) {

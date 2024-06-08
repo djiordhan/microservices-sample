@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { Secured } from '../decorators/auth';
 import { Controller, Post } from '../decorators/route';
+import { BadRequestError } from '../errors/http.errors';
 import { BaseController } from './base.controller';
-import { BadRequestError } from './errors/http.errors';
 
 @Controller('/orders')
 export class OrdersController extends BaseController {
