@@ -33,8 +33,6 @@ describe('Quotes API', () => {
             .post('/quotes')
             .send({ someKey: 'someValue' });
         expect(response.status).toBe(403);
-        console.log(response.status);
-        console.log(response);
         expect(response.body.error).toBe('invalid_merchant_account');
         expect(response.body.error_description).toBe('User is not authenticated');
     });
