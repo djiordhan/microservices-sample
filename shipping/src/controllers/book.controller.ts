@@ -12,7 +12,7 @@ export class OrdersController extends BaseController {
             const body = req.body;
 
             if (!body) {
-                throw new BadRequestError('No Order');
+                throw new BadRequestError('The data given to this server does not meet our criteria.');
             }
 
             res.send({});

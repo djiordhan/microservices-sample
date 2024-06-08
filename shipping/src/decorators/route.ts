@@ -12,7 +12,7 @@ export const Controller = (prefix: string) => {
 };
 
 const createRouteDecorator = (method: string) => {
-    return (path: string) => {
+    return (path?: string) => {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             if (!Reflect.hasMetadata('routes', target.constructor)) {
                 Reflect.defineMetadata('routes', [], target.constructor);
