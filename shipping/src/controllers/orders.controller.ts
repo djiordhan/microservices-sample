@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { Controller, Get } from '../decorators/route';
 
-@Controller('/product')
-export class ProductController {
+@Controller('/orders')
+export class OrdersController {
 
     @Get('/:id')
     getProduct(req: Request, res: Response) {
