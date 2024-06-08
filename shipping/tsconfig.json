@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "rootDir": "./",
     "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es6",
     "strict": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["./**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"]
 }

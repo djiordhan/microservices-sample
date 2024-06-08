@@ -1,8 +1,11 @@
+import bodyParser from 'body-parser';
 import express, { Application } from 'express';
-import { ProductController } from './controllers/OrdersController'; // Assuming product.controller.ts is in the controllers folder
-import { applyRoutes } from './utils/Route';
+import { ProductController } from './controllers/orders.controller';
+import { applyRoutes } from './decorators/route';
 
 const app: Application = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3000;
 
 const router = express.Router();

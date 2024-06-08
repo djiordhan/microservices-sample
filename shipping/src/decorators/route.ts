@@ -11,21 +11,28 @@ export const Controller = (prefix: string) => {
     };
 };
 
-export const Get = (path: string) => {
-    return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-        if (!Reflect.hasMetadata('routes', target.constructor)) {
-            Reflect.defineMetadata('routes', [], target.constructor);
-        }
+const createRouteDecorator = (method: string) => {
+    return (path: string) => {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            if (!Reflect.hasMetadata('routes', target.constructor)) {
+                Reflect.defineMetadata('routes', [], target.constructor);
+            }
 
-        const routes = Reflect.getMetadata('routes', target.constructor) as Array<any>;
-        routes.push({
-            method: 'get',
-            path,
-            handlerName: propertyKey
-        });
-        Reflect.defineMetadata('routes', routes, target.constructor);
+            const routes = Reflect.getMetadata('routes', target.constructor) as Array<any>;
+            routes.push({
+                method,
+                path,
+                handlerName: propertyKey
+            });
+            Reflect.defineMetadata('routes', routes, target.constructor);
+        };
     };
 };
+
+export const Get = createRouteDecorator('get');
+export const Post = createRouteDecorator('post');
+export const Put = createRouteDecorator('put');
+export const Delete = createRouteDecorator('delete');
 
 export const applyRoutes = (router: any, controller: any) => {
     const instance = new controller();
