@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 import { Express } from 'express';
 import request from 'supertest';
+import prisma from '../prisma/prismaClient.ts';
 import { OrdersController } from '../src/controllers/orders.controller';
 import { setupApp } from './appSetup';
-
-const prisma = new PrismaClient();
 
 describe('Order Tracking API', () => {
     let app: Express;
@@ -51,7 +50,13 @@ describe('Order Tracking API', () => {
                         }
                     }
                 },
-                user: {},
+                user: {
+                    create: {
+                        email: faker.internet.email(),
+                        first_name: faker.person.firstName(),
+                        last_name: faker.person.lastName(),
+                    }
+                },
                 customs_documents_require_printing: false,
                 documents: {},
                 merchant: {
@@ -81,15 +86,7 @@ describe('Order Tracking API', () => {
         });
     });
 
-    afterEach(async () => {
-        await prisma.track.deleteMany({});
-        await prisma.tracking.deleteMany({});
-        await prisma.parcel.deleteMany({});
-        await prisma.product.deleteMany({});
-        await prisma.order.deleteMany({});
-        await prisma.merchant.deleteMany({});
-        await prisma.courier.deleteMany({});
-    });
+    afterEach(async () => { });
 
     it('should retrieve order tracking information', async () => {
         const response = await request(app)
