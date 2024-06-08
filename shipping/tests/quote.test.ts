@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import request from 'supertest';
+import { QuotesController } from '../src/controllers/quotes.controller';
 import { setupApp } from './appSetup';
 
 describe('Quotes API', () => {
@@ -7,8 +8,8 @@ describe('Quotes API', () => {
     let noAuthApp: Express;
 
     beforeAll(() => {
-        app = setupApp(true); // App with authentication
-        noAuthApp = setupApp(false); // App without authentication
+        app = setupApp(true, QuotesController); // App with authentication
+        noAuthApp = setupApp(false, QuotesController); // App without authentication
     });
 
     it('should retrieve a quote', async () => {

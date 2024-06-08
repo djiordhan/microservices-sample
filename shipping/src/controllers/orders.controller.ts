@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
-import { Secured } from '../decorators/auth';
+import { Secured } from '../decorators/auth.ts';
 import { Controller, Get, Post } from '../decorators/route';
 import { BadRequestError } from '../errors/http.errors';
 import { BaseController } from './base.controller';
@@ -67,7 +67,7 @@ export class OrdersController extends BaseController {
             });
 
             if (!order) {
-                throw new BadRequestError('Order not found.');
+                throw new BadRequestError('The data given to this server does not meet our criteria.');
             }
 
             const response = {

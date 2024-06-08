@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Express } from 'express';
 import request from 'supertest';
+import { OrdersController } from '../src/controllers/orders.controller';
 import { setupApp } from './appSetup';
 
 const prisma = new PrismaClient();
@@ -10,8 +11,8 @@ describe('Order Tracking API', () => {
     let noAuthApp: Express;
 
     beforeAll(() => {
-        app = setupApp(true); // App with authentication
-        noAuthApp = setupApp(false); // App without authentication
+        app = setupApp(true, OrdersController);
+        noAuthApp = setupApp(false, OrdersController);
     });
 
     beforeEach(async () => {
@@ -81,12 +82,13 @@ describe('Order Tracking API', () => {
     });
 
     afterEach(async () => {
-        // Clean up the database after each test
-        await prisma.order.deleteMany();
-        await prisma.tracking.deleteMany();
-        await prisma.track.deleteMany();
-        await prisma.merchant.deleteMany();
-        await prisma.courier.deleteMany();
+        await prisma.track.deleteMany({});
+        await prisma.tracking.deleteMany({});
+        await prisma.parcel.deleteMany({});
+        await prisma.product.deleteMany({});
+        await prisma.order.deleteMany({});
+        await prisma.merchant.deleteMany({});
+        await prisma.courier.deleteMany({});
     });
 
     it('should retrieve order tracking information', async () => {
@@ -108,7 +110,8 @@ describe('Order Tracking API', () => {
             .send();
 
         expect(response.status).toBe(400);
-        expect(response.body.error).toBe('The data given to this server does not meet our criteria.');
+        expect(response.body.error).toBe('bad_request');
+        expect(response.body.error_description).toBe('The data given to this server does not meet our criteria.');
     });
 
     it('should return 403 for unauthenticated requests', async () => {

@@ -1,9 +1,8 @@
 import express, { Express } from 'express';
-import { QuotesController } from '../src/controllers/quotes.controller';
 import { applyRoutes } from '../src/decorators/route';
 import { errorHandler } from '../src/errors/errorHandler';
 
-export const setupApp = (auth: boolean = true): Express => {
+export const setupApp = (auth: boolean = true, controller: any): Express => {
     const app = express();
     app.use(express.json());
 
@@ -15,7 +14,7 @@ export const setupApp = (auth: boolean = true): Express => {
     }
 
     const router = express.Router();
-    applyRoutes(router, QuotesController);
+    applyRoutes(router, controller);
     app.use('/', router);
     app.use(errorHandler);
 
