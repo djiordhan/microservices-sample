@@ -1,8 +1,9 @@
 import { Express } from 'express';
 import request from 'supertest';
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { QuotesController } from '../src/controllers/quotes.controller';
 import { setupApp } from './utils/appSetup';
+import { createTestOrder } from './utils/test-util';
 
 describe('Quotes API', () => {
     let app: Express;
@@ -11,6 +12,10 @@ describe('Quotes API', () => {
     beforeAll(() => {
         app = setupApp(true, QuotesController); // App with authentication
         noAuthApp = setupApp(false, QuotesController); // App without authentication
+    });
+
+    beforeEach(async () => {
+        await createTestOrder('test_tracking_num');
     });
 
     it('should retrieve a quote', async () => {
