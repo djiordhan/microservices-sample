@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import prisma from '../../prisma/prismaClient.ts';
 import { BadRequestError } from '../errors/http.errors.ts';
 
@@ -47,10 +48,30 @@ const buildOrderInsertData = (order: any) => {
         delivery_suburb: order.delivery_suburb,
         state: 'processing',
         tracking_number: generateTrackingNumber(),
+        tracking_url: 'http://tracking-url',
+        customs_documents_require_printing: false,
         delivery_instructions: 'test special instructions',
+        documents: {},
+        merchant: {
+            create: {
+                store_name: faker.company.name(),
+                company_name: faker.company.name(),
+                contact_name: faker.person.firstName(),
+                contact_phone: faker.phone.number(),
+                website_url: faker.internet.url(),
+                preparation_time: 5,
+                address_1: faker.location.streetAddress(),
+                suburb: faker.location.city(),
+                state: faker.location.state(),
+                postcode: faker.location.zipCode(),
+                country_code: faker.location.countryCode()
+            }
+        },
         receiver_name: 'Josh',
         receiver_contact_number: '0400000000',
         slug: new Date().getTime() + '',
+        invoice_number: new Date().getTime() + '',
+        receiver_language_code: 'en-US',
         price: 0.0,
         processing_state: 'created',
         retailer_invoice: '#23201005',
@@ -60,7 +81,6 @@ const buildOrderInsertData = (order: any) => {
                 email: order.user_attributes.email,
                 first_name: order.user_attributes.first_name,
                 last_name: order.user_attributes.last_name,
-                mobile: '0491570006', // Add mobile if needed
             },
         },
         parcels: {
@@ -70,7 +90,8 @@ const buildOrderInsertData = (order: any) => {
                 name: 'Parcel', // You can update this with the actual name if provided
                 weight: parcel.weight,
                 width: parcel.width || 0.11,
-                qty: parcel.qty || 1,
+                label_number: 'LABEL12345',
+                courier_data: {},
             })),
         },
         products: {

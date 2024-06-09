@@ -6,7 +6,7 @@ import { OrdersController } from '../src/controllers/orders.controller';
 import { setupApp } from './utils/appSetup.ts';
 import { createTestOrder } from './utils/test-util.ts';
 
-describe('Order Tracking API', () => {
+describe('Cancel an Order API', () => {
     let app: Express;
     let noAuthApp: Express;
     let tracking_number = 'PPuqD0J0uLslM';
