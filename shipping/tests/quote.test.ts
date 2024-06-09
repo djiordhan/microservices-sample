@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import request from 'supertest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { QuotesController } from '../src/controllers/quotes.controller';
 import { setupApp } from './appSetup';
 
@@ -23,7 +24,7 @@ describe('Quotes API', () => {
     it('should return 400 for invalid request body', async () => {
         const response = await request(app)
             .post('/quotes')
-            .send(null);
+            .send(undefined);
         expect(response.status).toBe(400);
         expect(response.body.error).toBe('bad_request');
         expect(response.body.error_description).toBe('Dutiable amount must be greater than 0 for international orders');

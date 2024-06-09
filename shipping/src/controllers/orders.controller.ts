@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Secured } from '../decorators/auth.ts';
-import { Controller, Get, Post } from '../decorators/route.ts';
+import { Controller, Delete, Get, Post } from '../decorators/route.ts';
 import { cancelOrder, createOrder, trackOrder } from '../services/order.service.ts';
 import { BaseController } from './base.controller.ts';
 
@@ -19,7 +19,7 @@ export class OrdersController extends BaseController {
         }
     }
 
-    @Post('/:tracking_number')
+    @Delete('/:tracking_number')
     @Secured()
     public async deleteOrder(req: Request, res: Response) {
         try {
