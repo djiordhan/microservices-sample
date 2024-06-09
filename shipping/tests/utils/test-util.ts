@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import prisma from '../prisma/prismaClient.ts';
+import prisma from '../../prisma/prismaClient.ts';
 
 export const createTestOrder = async (tracking_number) => {
     await prisma.order.create({
@@ -17,11 +17,11 @@ export const createTestOrder = async (tracking_number) => {
             receiver_name: 'Francois',
             slug: 'ppuqd0j0ulslm',
             state: 'completed',
-            tracking_number: 'PPuqD0J0uLslM',
+            tracking_number,
             tracking_url: faker.internet.url(),
             tracking: {
                 create: {
-                    tracking_number: 'PPuqD0J0uLslM',
+                    tracking_number,
                     tracking_url: faker.internet.url(),
                     success: true,
                     track: {

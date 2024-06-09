@@ -2,7 +2,7 @@ import { Express } from 'express';
 import request from 'supertest';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { QuotesController } from '../src/controllers/quotes.controller';
-import { setupApp } from './appSetup';
+import { setupApp } from './utils/appSetup';
 
 describe('Quotes API', () => {
     let app: Express;
@@ -16,9 +16,22 @@ describe('Quotes API', () => {
     it('should retrieve a quote', async () => {
         const response = await request(app)
             .post('/quotes')
-            .send({ someKey: 'someValue' });
+            .send({
+                "quote": {
+                    "dropoff_postcode": "2000",
+                    "dropoff_state": "NSW",
+                    "dropoff_suburb": "Sydney",
+                    "parcel_attributes": [
+                        {
+                            "qty": 1,
+                            "weight": 1
+                        }
+                    ]
+                }
+            });
         expect(response.status).toBe(200);
-        expect(response.body).toEqual({});
+        expect(response.body.response).toBeDefined();
+        expect(response.body.response.length).toBeGreaterThan(0);
     });
 
     it('should return 400 for invalid request body', async () => {

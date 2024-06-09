@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker';
 import { Express } from 'express';
 import request from 'supertest';
-import prisma from '../prisma/prismaClient.ts';
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { OrdersController } from '../src/controllers/orders.controller';
-import { setupApp } from './appSetup';
+import { setupApp } from './utils/appSetup.ts';
+import { createTestOrder } from './utils/test-util.ts';
 
 describe('Order Tracking API', () => {
     let app: Express;
@@ -15,75 +15,7 @@ describe('Order Tracking API', () => {
     });
 
     beforeEach(async () => {
-        // Seed the database with a test order and tracking data
-        await prisma.order.create({
-            data: {
-                courier_delivery_instructions: 'Leave at front door',
-                courier_job_id: 'TEST1234',
-                delivery_address: '123 Test St',
-                delivery_postcode: '12345',
-                delivery_state: 'Test State',
-                delivery_suburb: 'Test Suburb',
-                invoice_number: 'INV1234',
-                price: 100.0,
-                receiver_contact_number: '1234567890',
-                receiver_language_code: 'EN',
-                receiver_name: 'John Doe',
-                slug: 'test-order',
-                state: 'completed',
-                tracking_number: 'TESTTRACK123',
-                tracking_url: 'http://example.com/track/TESTTRACK123',
-                tracking: {
-                    create: {
-                        tracking_number: 'TESTTRACK123',
-                        tracking_url: 'http://example.com/track/TESTTRACK123',
-                        success: true,
-                        track: {
-                            create: [
-                                {
-                                    status: 'Completed',
-                                    date: new Date(),
-                                    timestamp: 1234567890,
-                                    status_owner: 'Test Courier'
-                                }
-                            ]
-                        }
-                    }
-                },
-                user: {
-                    create: {
-                        email: faker.internet.email(),
-                        first_name: faker.person.firstName(),
-                        last_name: faker.person.lastName(),
-                    }
-                },
-                customs_documents_require_printing: false,
-                documents: {},
-                merchant: {
-                    create: {
-                        store_name: 'Test Store',
-                        company_name: 'Test Company',
-                        contact_name: 'Jane Doe',
-                        contact_phone: '0987654321',
-                        website_url: 'http://teststore.com',
-                        preparation_time: 5,
-                        address_1: '456 Test Ave',
-                        suburb: 'Test City',
-                        state: 'TS',
-                        postcode: '54321',
-                        country_code: 'US'
-                    }
-                },
-                courier: {
-                    create: {
-                        courier_type: 'TestCourier',
-                        quotes: {},
-                        service_level: 'standard',
-                        success: true
-                    }
-                }
-            }
-        });
+        await createTestOrder('TESTTRACK123');
     });
 
     afterEach(async () => { });
@@ -95,7 +27,6 @@ describe('Order Tracking API', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.tracking_number).toBe('TESTTRACK123');
-        expect(response.body.tracking_url).toBe('http://example.com/track/TESTTRACK123');
         expect(response.body.success).toBe(true);
         expect(response.body.track).toHaveLength(1);
         expect(response.body.track[0].status).toBe('Completed');

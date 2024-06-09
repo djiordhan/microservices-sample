@@ -3,8 +3,8 @@ import { Express } from 'express';
 import request from 'supertest';
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { OrdersController } from '../src/controllers/orders.controller';
-import { setupApp } from './appSetup';
-import { createTestOrder } from './test-util.ts';
+import { setupApp } from './utils/appSetup.ts';
+import { createTestOrder } from './utils/test-util.ts';
 
 describe('Order Tracking API', () => {
     let app: Express;
