@@ -43,4 +43,27 @@ export class OrdersController extends BaseController {
         }
     }
 
+    @Get('/:tracking_number/label')
+    @Secured()
+    public async labelOrder(req: Request, res: Response) {
+        try {
+            const tracking_number = req.params?.tracking_number;
+            const response =
+            {
+                "manifest": "SHP12345",
+                "manifest_id": 123123,
+                "courier": "eParcel",
+                "manifest_pdf": "https://shippit.com/manifest20160721-96368-1tpowvr.pdf",
+                "order_count": 1,
+                "orders": [
+                    tracking_number
+                ],
+                "success": true
+            };
+            res.send({ response });
+        } catch (error: any) {
+            this.handleError(res, error);
+        }
+    }
+
 }
